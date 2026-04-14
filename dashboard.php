@@ -59,6 +59,16 @@ include __DIR__ . '/views/layouts/header.php';
                 <i class="bi bi-clock-history"></i>
             </div>
         </div>
+
+        <div class="stat-card" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+            <div class="stat-info">
+                <h3 id="stat-faults" style="color:#fff;">-</h3>
+                <p style="color:rgba(255,255,255,0.85);">Active Faults</p>
+            </div>
+            <div class="stat-icon" style="color:rgba(255,255,255,0.3);">
+                <i class="bi bi-exclamation-triangle"></i>
+            </div>
+        </div>
     </div>
 
     <!-- Device Overview & Uplink -->
@@ -90,6 +100,35 @@ include __DIR__ . '/views/layouts/header.php';
                     <div style="max-width: 300px; margin: 0 auto;">
                         <canvas id="uplinkChart"></canvas>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Device Manufacturers Chart -->
+    <div class="row mt-4">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-diagram-2"></i> Device Manufacturers
+                    <button class="btn btn-sm btn-primary float-end" onclick="loadDashboardData()">
+                        <i class="bi bi-arrow-clockwise"></i> Refresh
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div style="max-width: 300px; margin: 0 auto;">
+                        <canvas id="manufacturerChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-exclamation-triangle text-danger"></i> Active Faults Summary
+                </div>
+                <div class="card-body" id="faults-summary">
+                    <div class="spinner"></div>
                 </div>
             </div>
         </div>
@@ -172,6 +211,7 @@ include __DIR__ . '/views/layouts/header.php';
 <script>
 let deviceChart = null;
 let uplinkChart = null;
+let manufacturerChart = null;
 let dashboardFetchInProgress = false;
 let uplinkFetchInProgress = false;
 let recentDevicesFetchInProgress = false;
@@ -194,12 +234,20 @@ async function loadDashboardData() {
             document.getElementById('stat-online').textContent = stats.online;
             document.getElementById('stat-offline').textContent = stats.offline;
 
+            // Active Faults
+            const faultsEl = document.getElementById('stat-faults');
+            if (faultsEl) faultsEl.textContent = stats.active_faults ?? stats.offline;
+
             // Calculate percentage
             const onlinePercentage = stats.total > 0 ? Math.round((stats.online / stats.total) * 100) : 0;
             document.getElementById('stat-uptime').textContent = onlinePercentage + '%';
 
-            // Update chart
+            // Update charts
             updateChart(stats);
+            if (stats.manufacturers) {
+                updateManufacturerChart(stats.manufacturers);
+                updateFaultsSummary(stats);
+            }
         } else {
             if (result && result.error !== 'timeout') {
                 showToast('Gagal memuat data dashboard', 'danger');
@@ -252,6 +300,76 @@ function updateChart(stats) {
             }
         }
     });
+}
+
+function updateManufacturerChart(manufacturers) {
+    const ctx = document.getElementById('manufacturerChart');
+    if (!ctx) return;
+
+    const labels = Object.keys(manufacturers).slice(0, 8);
+    const values = labels.map(k => manufacturers[k]);
+    const total = values.reduce((a, b) => a + b, 0);
+
+    const colors = [
+        'rgba(52,152,219,0.8)', 'rgba(46,204,113,0.8)', 'rgba(231,76,60,0.8)',
+        'rgba(155,89,182,0.8)', 'rgba(241,196,15,0.8)', 'rgba(52,73,94,0.8)',
+        'rgba(26,188,156,0.8)', 'rgba(230,126,34,0.8)'
+    ];
+
+    if (manufacturerChart) manufacturerChart.destroy();
+
+    manufacturerChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels.map(l => `${l} (${manufacturers[l]})`),
+            datasets: [{
+                data: values,
+                backgroundColor: colors.slice(0, labels.length),
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } },
+                title: { display: true, text: 'Device Manufacturers Distribution' }
+            }
+        }
+    });
+}
+
+function updateFaultsSummary(stats) {
+    const container = document.getElementById('faults-summary');
+    if (!container) return;
+
+    const faultCount = stats.active_faults ?? stats.offline;
+    const severityClass = faultCount === 0 ? 'success' : (faultCount < 5 ? 'warning' : 'danger');
+    const severityText = faultCount === 0 ? 'All systems operational' : `${faultCount} device(s) recently went offline`;
+
+    container.innerHTML = `
+        <div class="text-center mb-3">
+            <div style="font-size:3rem;" class="text-${severityClass}">
+                <i class="bi bi-${faultCount === 0 ? 'check-circle-fill' : 'exclamation-triangle-fill'}"></i>
+            </div>
+            <h4 class="text-${severityClass} fw-bold">${faultCount}</h4>
+            <p class="text-muted">${severityText}</p>
+        </div>
+        <div class="row text-center">
+            <div class="col-4">
+                <div class="fw-bold text-primary fs-5">${stats.total}</div>
+                <small class="text-muted">Total</small>
+            </div>
+            <div class="col-4">
+                <div class="fw-bold text-success fs-5">${stats.online}</div>
+                <small class="text-muted">Online</small>
+            </div>
+            <div class="col-4">
+                <div class="fw-bold text-danger fs-5">${stats.offline}</div>
+                <small class="text-muted">Offline</small>
+            </div>
+        </div>
+    `;
 }
 
 async function loadUplinkData() {
