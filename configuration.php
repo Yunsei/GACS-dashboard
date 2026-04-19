@@ -47,6 +47,11 @@ include __DIR__ . '/views/layouts/header.php';
                     <i class="fab fa-telegram"></i> Bot Config
                 </button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="olt-tab" data-bs-toggle="tab" data-bs-target="#olt-config" type="button" role="tab">
+                    <i class="bi bi-hdd-rack"></i> OLT Config
+                </button>
+            </li>
         </ul>
 
         <!-- Tab Content -->
@@ -230,11 +235,86 @@ include __DIR__ . '/views/layouts/header.php';
                 </div>
             </div>
 
+            <!-- OLT Config Tab -->
+            <div class="tab-pane fade" id="olt-config" role="tabpanel">
+                <div class="card mt-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-hdd-rack"></i> OLT Configurations (Huawei GPON)</span>
+                        <button class="btn btn-sm btn-primary" onclick="showOLTForm()">
+                            <i class="bi bi-plus-circle"></i> Add OLT
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <!-- Add/Edit Form -->
+                        <div id="olt-form-container" style="display:none;" class="mb-4">
+                            <div class="card border-primary">
+                                <div class="card-body">
+                                    <h6 id="olt-form-title">Add OLT</h6>
+                                    <form id="form-olt">
+                                        <input type="hidden" id="olt-id" name="id" value="0">
+                                        <div class="row g-2">
+                                            <div class="col-md-4">
+                                                <label class="form-label">Name</label>
+                                                <input type="text" id="olt-name" name="name" class="form-control" placeholder="Main OLT" required>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="form-label">IP Address</label>
+                                                <input type="text" id="olt-ip" name="ip_address" class="form-control" placeholder="192.168.1.100" required>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="form-label">SNMP Community</label>
+                                                <input type="text" id="olt-community" name="snmp_community" class="form-control" placeholder="public" value="public">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="form-label">SNMP Port</label>
+                                                <input type="number" id="olt-port" name="snmp_port" class="form-control" value="161">
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 d-flex gap-2">
+                                            <button type="button" class="btn btn-success" onclick="testOLTConnection()">
+                                                <i class="bi bi-check-circle"></i> Test
+                                            </button>
+                                            <button type="button" class="btn btn-primary" onclick="saveOLT()">
+                                                <i class="bi bi-save"></i> Save
+                                            </button>
+                                            <button type="button" class="btn btn-secondary" onclick="hideOLTForm()">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                        <div id="olt-test-result" class="mt-2"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- OLT Table -->
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="olt-table">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>IP Address</th>
+                                        <th>Community</th>
+                                        <th>Port</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="olt-table-body">
+                                    <tr><td colspan="6" class="text-center text-muted">Loading…</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
 
 <!-- Load external JavaScript -->
 <script src="/assets/js/configuration.js?v=<?php echo time(); ?>"></script>
+<script src="/assets/js/olt-config.js?v=<?php echo time(); ?>"></script>
 
 <?php include __DIR__ . '/views/layouts/footer.php'; ?>

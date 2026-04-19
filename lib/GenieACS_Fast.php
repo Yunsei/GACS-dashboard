@@ -182,16 +182,35 @@ class GenieACS_Fast {
             $data['temperature'] = 'N/A';
         }
 
-        // PPPoE Username - check multiple WAN connection devices
+        // PPPoE Username and MAC - check multiple WAN connection devices
         $pppoeUsername = 'N/A';
+        $pppoeMac = 'N/A';
         for ($i = 1; $i <= 8; $i++) {
             $username = $device['InternetGatewayDevice']['WANDevice']['1']['WANConnectionDevice'][$i]['WANPPPConnection']['1']['Username']['_value'] ?? null;
             if ($username && $username !== '' && $username !== 'N/A') {
                 $pppoeUsername = $username;
+                // Get MAC from same connection
+                $mac = $device['InternetGatewayDevice']['WANDevice']['1']['WANConnectionDevice'][$i]['WANPPPConnection']['1']['MACAddress']['_value'] ??
+                       $device['InternetGatewayDevice']['WANDevice']['1']['WANEthernetLinkConfig']['MACAddress']['_value'] ??
+                       null;
+                if ($mac && $mac !== '') {
+                    $pppoeMac = strtoupper($mac);
+                }
                 break;
             }
         }
+        // Fallback: try WAN IP connection MAC
+        if ($pppoeMac === 'N/A') {
+            for ($i = 1; $i <= 8; $i++) {
+                $mac = $device['InternetGatewayDevice']['WANDevice']['1']['WANConnectionDevice'][$i]['WANIPConnection']['1']['MACAddress']['_value'] ?? null;
+                if ($mac && $mac !== '') {
+                    $pppoeMac = strtoupper($mac);
+                    break;
+                }
+            }
+        }
         $data['pppoe_username'] = $pppoeUsername;
+        $data['pppoe_mac'] = $pppoeMac;
 
         // Connected Devices Count
         $connectedDevices = 0;

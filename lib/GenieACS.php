@@ -371,12 +371,41 @@ class GenieACS {
             }
         }
 
+        // Manufacturer distribution
+        $manufacturers = [];
+        foreach ($devices['data'] as $device) {
+            $mfr = $device['_deviceId']['_Manufacturer'] ?? 'Unknown';
+            if (!isset($manufacturers[$mfr])) {
+                $manufacturers[$mfr] = 0;
+            }
+            $manufacturers[$mfr]++;
+        }
+        arsort($manufacturers);
+
+        // Active faults = devices that went offline (last inform > 5 min ago but was seen in last 24h)
+        $activeFaults = 0;
+        foreach ($devices['data'] as $device) {
+            $lastInform = isset($device['_lastInform']) ? $device['_lastInform'] : null;
+            if ($lastInform) {
+                $ts = strtotime($lastInform);
+                if ($ts !== false) {
+                    $minutesAgo = (time() - $ts) / 60;
+                    // Fault: offline (>5 min) but was seen in last 24 hours
+                    if ($minutesAgo > 5 && $minutesAgo < 1440) {
+                        $activeFaults++;
+                    }
+                }
+            }
+        }
+
         return [
             'success' => true,
             'data' => [
                 'total' => $total,
                 'online' => $online,
-                'offline' => $offline
+                'offline' => $offline,
+                'active_faults' => $activeFaults,
+                'manufacturers' => $manufacturers
             ]
         ];
     }

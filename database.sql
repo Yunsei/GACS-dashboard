@@ -634,4 +634,23 @@ WHERE tu.is_active = 1;
 --   - Added: mac_vendor_cache table for MAC address vendor lookups
 --   - Updated: odc_config with server_id column for child ODC support
 --
+-- v1.1.0 (2026-04-14) - OLT Monitor Integration
+--   - Added: olt_configs table for Huawei GPON OLT SNMP monitoring
+--
 -- ============================================================================
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- OLT Monitor - Huawei GPON OLT configurations
+-- ─────────────────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS `olt_configs` (
+  `id`             INT(11)      NOT NULL AUTO_INCREMENT,
+  `name`           VARCHAR(100) NOT NULL,
+  `ip_address`     VARCHAR(45)  NOT NULL,
+  `snmp_community` VARCHAR(100) NOT NULL DEFAULT 'public',
+  `snmp_port`      SMALLINT     NOT NULL DEFAULT 161,
+  `is_active`      TINYINT(1)   NOT NULL DEFAULT 1,
+  `created_at`     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at`     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_olt_ip` (`ip_address`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
