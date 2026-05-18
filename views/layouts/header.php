@@ -44,6 +44,12 @@
                 </a>
             </li>
             <li>
+                <a href="/olt-monitor.php" class="<?php echo ($currentPage ?? '') === 'olt-monitor' ? 'active' : ''; ?>" data-tooltip="OLT Monitor">
+                    <i class="bi bi-hdd-rack"></i>
+                    <span>OLT Monitor</span>
+                </a>
+            </li>
+            <li>
                 <a href="/configuration.php" class="<?php echo ($currentPage ?? '') === 'configuration' ? 'active' : ''; ?>" data-tooltip="Configuration">
                     <i class="bi bi-gear"></i>
                     <span>Configuration</span>
