@@ -109,9 +109,91 @@ async function loadDeviceDetail(isAutoRefresh = false) {
         // Update badge counts
         document.getElementById('wan-count-badge').textContent = device.wan_details ? device.wan_details.length : 0;
         document.getElementById('devices-count-badge').textContent = device.connected_devices ? device.connected_devices.length : 0;
+        const wifiClientsCount = (device.connected_devices || []).filter(d => d.interface_type === 'WiFi').length;
+        document.getElementById('clients-count-badge').textContent = wifiClientsCount;
+
+        // Build signal badge for overview cards
+        const rxPowerVal = parseFloat(device.rx_power);
+        let signalCardClass = 'text-secondary';
+        let signalIcon = 'bi-reception-2';
+        if (!isNaN(rxPowerVal)) {
+            if (rxPowerVal > -20) { signalCardClass = 'text-success'; signalIcon = 'bi-reception-4'; }
+            else if (rxPowerVal >= -23) { signalCardClass = 'text-warning'; signalIcon = 'bi-reception-3'; }
+            else { signalCardClass = 'text-danger'; signalIcon = 'bi-reception-1'; }
+        }
 
         // Populate Overview Tab
         document.getElementById('overview-content').innerHTML = `
+            <!-- Summary Cards Row -->
+            <div class="row g-3 mb-4">
+                <div class="col-6 col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-calendar3 text-primary me-2"></i>
+                                <small class="text-muted">Registered Date</small>
+                            </div>
+                            <div class="fw-semibold">${device.last_inform !== 'N/A' ? device.last_inform.split(' ')[0] : 'N/A'}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-cpu text-info me-2"></i>
+                                <small class="text-muted">Hardware Version</small>
+                            </div>
+                            <div class="fw-semibold">${device.hardware_version}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-gear text-secondary me-2"></i>
+                                <small class="text-muted">Software Version</small>
+                            </div>
+                            <div class="fw-semibold">${device.software_version}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi ${signalIcon} ${signalCardClass} me-2"></i>
+                                <small class="text-muted">Signal Strength</small>
+                            </div>
+                            <div class="fw-semibold ${signalCardClass}">${device.rx_power} dBm</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-clock-history text-warning me-2"></i>
+                                <small class="text-muted">Uptime</small>
+                            </div>
+                            <div class="fw-semibold">${formatUptime(device.uptime)}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-arrow-repeat text-success me-2"></i>
+                                <small class="text-muted">Last Inform</small>
+                            </div>
+                            <div class="fw-semibold">${device.last_inform}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-6">
                     <h6><i class="bi bi-info-circle"></i> Basic Information</h6>
@@ -119,7 +201,6 @@ async function loadDeviceDetail(isAutoRefresh = false) {
                         <tr><th width="40%">Device ID</th><td>${device.device_id}</td></tr>
                         <tr><th>Serial Number</th><td>${device.serial_number}</td></tr>
                         <tr><th>MAC Address</th><td>${device.mac_address}</td></tr>
-                        <tr><th>Last Inform</th><td>${device.last_inform}</td></tr>
                         <tr><th>Status</th><td><span class="badge ${device.status === 'online' ? 'online' : 'offline'}">${device.status}</span></td></tr>
                         <tr><th>Manufacturer</th><td>${device.manufacturer}</td></tr>
                         <tr><th>Product Class</th><td>${device.product_class}</td></tr>
@@ -127,14 +208,7 @@ async function loadDeviceDetail(isAutoRefresh = false) {
                     </table>
                 </div>
                 <div class="col-md-6">
-                    <h6><i class="bi bi-cpu"></i> Hardware/Software</h6>
-                    <table class="table table-sm table-bordered">
-                        <tr><th width="40%">Hardware Version</th><td>${device.hardware_version}</td></tr>
-                        <tr><th>Software Version</th><td>${device.software_version}</td></tr>
-                        <tr><th>Uptime</th><td>${formatUptime(device.uptime)}</td></tr>
-                    </table>
-
-                    <h6 class="mt-4"><i class="bi bi-broadcast"></i> Optical Information</h6>
+                    <h6><i class="bi bi-broadcast"></i> Optical Information</h6>
                     <table class="table table-sm table-bordered">
                         <tr><th width="40%">Rx Power</th><td>${device.rx_power} dBm</td></tr>
                         <tr><th>Temperature</th><td>${device.temperature}°C</td></tr>
@@ -229,6 +303,14 @@ async function loadDeviceDetail(isAutoRefresh = false) {
 
         // Populate Connected Devices Tab
         document.getElementById('devices-content').innerHTML = renderConnectedDevicesTab(device.connected_devices);
+
+        // Populate WiFi Clients Tab (filter WiFi clients from connected_devices)
+        const wifiClients = (device.connected_devices || []).filter(d => d.interface_type === 'WiFi');
+        document.getElementById('clients-count-badge').textContent = wifiClients.length;
+        document.getElementById('clients-content').innerHTML = renderClientsTab(wifiClients, device);
+
+        // Populate Parameters Tab (load on demand)
+        document.getElementById('parameters-content').innerHTML = renderParametersTabPlaceholder(device.device_id);
 
         // Restore hotspot data after re-render (if available)
         if (isAutoRefresh && Object.keys(savedHotspotData).length > 0) {
@@ -2257,6 +2339,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Auto refresh every 30 seconds (preserve scroll position)
     setInterval(() => loadDeviceDetail(true), 30000);
 
+    // Load parameters when Parameters tab is clicked
+    document.getElementById('parameters-tab')?.addEventListener('shown.bs.tab', function() {
+        const container = document.getElementById('parameters-content');
+        if (container && container.dataset.loaded !== 'true') {
+            loadDeviceParameters(deviceId);
+        }
+    });
+
     // Auto-start/stop hotspot monitoring based on Connected Devices tab visibility
     const allTabs = document.querySelectorAll('[data-bs-toggle="tab"]');
     allTabs.forEach(tab => {
@@ -2278,3 +2368,180 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// ============================================================================
+// WiFi Clients Tab
+// ============================================================================
+function renderClientsTab(wifiClients, device) {
+    if (!wifiClients || wifiClients.length === 0) {
+        return `
+            <div class="alert alert-info mt-2">
+                <i class="bi bi-wifi-off"></i> No WiFi clients currently connected to this device.
+            </div>
+        `;
+    }
+
+    let html = `
+        <div class="d-flex align-items-center mb-3">
+            <h6 class="mb-0"><i class="bi bi-people"></i> WiFi Clients <span class="badge bg-primary">${wifiClients.length}</span></h6>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th width="4%" class="text-center">#</th>
+                        <th><i class="bi bi-pc-display"></i> Device</th>
+                        <th><i class="bi bi-hdd-network"></i> IP Address</th>
+                        <th><i class="bi bi-ethernet"></i> MAC Address</th>
+                        <th class="text-center"><i class="bi bi-wifi"></i> Band</th>
+                        <th class="text-center"><i class="bi bi-check-circle"></i> Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    wifiClients.forEach((client, index) => {
+        const statusBadge = client.active
+            ? '<span class="badge online">Active</span>'
+            : '<span class="badge offline">Inactive</span>';
+
+        const displayName = client.vendor || client.hostname || 'Unknown Device';
+
+        html += `
+            <tr>
+                <td class="text-center">${index + 1}</td>
+                <td>
+                    <i class="bi bi-laptop text-info"></i> <strong>${displayName}</strong>
+                    ${client.hostname && client.vendor && client.hostname !== client.vendor
+                        ? `<br><small class="text-muted">${client.hostname}</small>` : ''}
+                </td>
+                <td>${makeIPClickable(client.ip_address)}</td>
+                <td><code>${client.mac_address}</code></td>
+                <td class="text-center"><span class="badge bg-info"><i class="bi bi-wifi"></i> WiFi</span></td>
+                <td class="text-center">${statusBadge}</td>
+            </tr>
+        `;
+    });
+
+    html += `
+                </tbody>
+            </table>
+        </div>
+    `;
+
+    return html;
+}
+
+// ============================================================================
+// Parameters Tab
+// ============================================================================
+function renderParametersTabPlaceholder(deviceId) {
+    return `
+        <div class="d-flex align-items-center mb-3">
+            <h6 class="mb-0"><i class="bi bi-list-ul"></i> TR-069 Parameters</h6>
+            <button class="btn btn-sm btn-primary ms-3" onclick="loadDeviceParameters('${deviceId}')">
+                <i class="bi bi-arrow-clockwise"></i> Load Parameters
+            </button>
+        </div>
+        <div id="parameters-tree-container">
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i> Click "Load Parameters" to fetch the full TR-069 parameter tree for this device.
+            </div>
+        </div>
+    `;
+}
+
+async function loadDeviceParameters(deviceId) {
+    const container = document.getElementById('parameters-content');
+    if (!container) return;
+
+    container.dataset.loaded = 'true';
+    container.innerHTML = `
+        <div class="d-flex align-items-center mb-3">
+            <h6 class="mb-0"><i class="bi bi-list-ul"></i> TR-069 Parameters</h6>
+            <button class="btn btn-sm btn-primary ms-3" onclick="loadDeviceParameters('${deviceId}')">
+                <i class="bi bi-arrow-clockwise"></i> Refresh
+            </button>
+        </div>
+        <div class="text-center py-4"><div class="spinner"></div><p class="mt-2 text-muted">Loading parameters...</p></div>
+    `;
+
+    const result = await fetchAPI('/api/get-device-detail.php?device_id=' + encodeURIComponent(deviceId));
+
+    if (!result || !result.success) {
+        container.innerHTML = `<div class="alert alert-danger">Failed to load parameters</div>`;
+        return;
+    }
+
+    const device = result.device;
+    const params = buildParametersList(device);
+
+    let html = `
+        <div class="d-flex align-items-center mb-3">
+            <h6 class="mb-0"><i class="bi bi-list-ul"></i> TR-069 Parameters</h6>
+            <button class="btn btn-sm btn-primary ms-3" onclick="loadDeviceParameters('${deviceId}')">
+                <i class="bi bi-arrow-clockwise"></i> Refresh
+            </button>
+            <input type="text" class="form-control form-control-sm ms-3" style="max-width:300px;"
+                placeholder="Filter parameters..." oninput="filterParameters(this.value)">
+        </div>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-hover" id="params-table">
+                <thead class="table-light">
+                    <tr>
+                        <th width="45%">Parameter</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    params.forEach(p => {
+        html += `
+            <tr class="param-row">
+                <td><code class="text-primary" style="font-size:0.8rem;">${p.name}</code></td>
+                <td><span style="font-size:0.85rem;">${p.value !== null && p.value !== undefined ? p.value : '<span class="text-muted">N/A</span>'}</span></td>
+            </tr>
+        `;
+    });
+
+    html += `</tbody></table></div>`;
+    container.innerHTML = html;
+}
+
+function buildParametersList(device) {
+    // Flatten key device parameters into a readable list
+    return [
+        { name: 'DeviceInfo.Manufacturer', value: device.manufacturer },
+        { name: 'DeviceInfo.ProductClass', value: device.product_class },
+        { name: 'DeviceInfo.SerialNumber', value: device.serial_number },
+        { name: 'DeviceInfo.HardwareVersion', value: device.hardware_version },
+        { name: 'DeviceInfo.SoftwareVersion', value: device.software_version },
+        { name: 'DeviceInfo.UpTime', value: formatUptime(device.uptime) },
+        { name: 'ManagementServer.ConnectionRequestURL', value: device.ip_tr069 },
+        { name: 'WAN.ExternalIPAddress', value: device.ip_address },
+        { name: 'WAN.PPPoEUsername', value: device.pppoe_username },
+        { name: 'WAN.MACAddress', value: device.mac_address },
+        { name: 'WiFi.SSID', value: device.wifi_ssid },
+        { name: 'WiFi.KeyPassphrase', value: device.wifi_password },
+        { name: 'Optical.RxPower', value: device.rx_power ? device.rx_power + ' dBm' : null },
+        { name: 'Optical.Temperature', value: device.temperature ? device.temperature + ' °C' : null },
+        { name: 'Admin.SuperUser', value: device.admin_user },
+        ...(device.wan_details || []).map((wan, i) => ([
+            { name: `WAN[${i+1}].ConnectionType`, value: wan.connection_type },
+            { name: `WAN[${i+1}].ExternalIPAddress`, value: wan.external_ip },
+            { name: `WAN[${i+1}].Username`, value: wan.username },
+            { name: `WAN[${i+1}].Enable`, value: String(wan.enable) },
+            { name: `WAN[${i+1}].Status`, value: wan.status },
+        ])).flat(),
+    ].filter(p => p.value !== null && p.value !== undefined && p.value !== 'N/A' && p.value !== '');
+}
+
+function filterParameters(searchTerm) {
+    const rows = document.querySelectorAll('#params-table .param-row');
+    const term = searchTerm.toLowerCase();
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(term) ? '' : 'none';
+    });
+}

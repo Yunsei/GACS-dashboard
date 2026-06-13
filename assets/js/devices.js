@@ -98,6 +98,9 @@ async function loadDevices(isAutoRefresh = false) {
                 devicesToRender = allDevices.filter(device => {
                     const serialNumber = (device.serial_number || '').toLowerCase();
                     const macAddress = (device.mac_address || '').toLowerCase();
+                    const pppoeUsername = (device.pppoe_username || '').toLowerCase();
+                    const pppoeMac = (device.pppoe_mac || '').toLowerCase();
+                    const ssid = (device.wifi_ssid || '').toLowerCase();
 
                     // Search in tags array
                     let tagsMatch = false;
@@ -105,7 +108,9 @@ async function loadDevices(isAutoRefresh = false) {
                         tagsMatch = device.tags.some(tag => tag.toLowerCase().includes(searchTerm));
                     }
 
-                    return serialNumber.includes(searchTerm) || macAddress.includes(searchTerm) || tagsMatch;
+                    return serialNumber.includes(searchTerm) || macAddress.includes(searchTerm) ||
+                           pppoeUsername.includes(searchTerm) || pppoeMac.includes(searchTerm) ||
+                           ssid.includes(searchTerm) || tagsMatch;
                 });
 
                 // Debug: Log search results during auto-refresh
@@ -322,6 +327,7 @@ async function renderDevices(devices) {
             <td data-sort-value="${ipAddress}">${ipDisplay}</td>
             <td data-sort-value="${device.wifi_ssid}">${device.wifi_ssid}</td>
             <td data-sort-value="${device.pppoe_username || ''}">${device.pppoe_username || 'N/A'}</td>
+            <td><small>${device.pppoe_mac || 'N/A'}</small></td>
             <td data-sort-value="${parseFloat(device.rx_power) || -999}">${rxDisplay}</td>
             <td data-sort-value="${parseFloat(device.temperature) || -999}">${device.temperature}°C</td>
             <td data-sort-value="${clientsCount}" class="text-center">${clientsBadge}</td>
@@ -492,8 +498,9 @@ function generateTableHeader(type) {
                     SSID <i class="bi bi-chevron-expand sort-icon"></i>
                 </th>
                 <th class="sortable" onclick="sortTable('pppoe_username')" style="cursor: pointer;">
-                    PPPoE <i class="bi bi-chevron-expand sort-icon"></i>
+                    PPPoE User <i class="bi bi-chevron-expand sort-icon"></i>
                 </th>
+                <th>PPPoE MAC</th>
                 <th class="sortable" onclick="sortTable('rx_power')" style="cursor: pointer;">
                     Rx <i class="bi bi-chevron-expand sort-icon"></i>
                 </th>
@@ -569,7 +576,7 @@ function extractIP(ipString) {
 function updateSearchPlaceholder(type) {
     const searchInput = document.getElementById('search-input');
     if (type === 'onu') {
-        searchInput.placeholder = 'Search by Serial Number, MAC Address, or Tags...';
+        searchInput.placeholder = 'Search by Serial Number, MAC, PPPoE Username, SSID, or Tags...';
     } else {
         searchInput.placeholder = 'Search by Name...';
     }
@@ -620,10 +627,13 @@ function filterDevices() {
 
     // Different search logic based on tab type
     if (currentFilterType === 'onu') {
-        // ONU: search by Serial Number, MAC Address, or Tags
+        // ONU: search by Serial Number, MAC Address, PPPoE Username, SSID, or Tags
         const filteredDevices = baseDevices.filter(device => {
             const serialNumber = (device.serial_number || '').toLowerCase();
             const macAddress = (device.mac_address || '').toLowerCase();
+            const pppoeUsername = (device.pppoe_username || '').toLowerCase();
+            const pppoeMac = (device.pppoe_mac || '').toLowerCase();
+            const ssid = (device.wifi_ssid || '').toLowerCase();
 
             // Search in tags array
             let tagsMatch = false;
@@ -631,7 +641,9 @@ function filterDevices() {
                 tagsMatch = device.tags.some(tag => tag.toLowerCase().includes(searchTerm));
             }
 
-            return serialNumber.includes(searchTerm) || macAddress.includes(searchTerm) || tagsMatch;
+            return serialNumber.includes(searchTerm) || macAddress.includes(searchTerm) ||
+                   pppoeUsername.includes(searchTerm) || pppoeMac.includes(searchTerm) ||
+                   ssid.includes(searchTerm) || tagsMatch;
         });
 
         // Debug: Log search results

@@ -84,6 +84,16 @@ include __DIR__ . '/views/layouts/header.php';
                         <i class="bi bi-hdd-network"></i> Connected Devices <span id="devices-count-badge" class="badge bg-primary ms-1">0</span>
                     </button>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="clients-tab" data-bs-toggle="tab" data-bs-target="#clients" type="button" role="tab">
+                        <i class="bi bi-people"></i> Clients <span id="clients-count-badge" class="badge bg-primary ms-1">0</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="parameters-tab" data-bs-toggle="tab" data-bs-target="#parameters" type="button" role="tab">
+                        <i class="bi bi-list-ul"></i> Parameters
+                    </button>
+                </li>
             </ul>
 
             <!-- Tab Content (hidden initially) -->
@@ -111,6 +121,16 @@ include __DIR__ . '/views/layouts/header.php';
                 <!-- Connected Devices Tab -->
                 <div class="tab-pane fade" id="devices" role="tabpanel">
                     <div id="devices-content"></div>
+                </div>
+
+                <!-- WiFi Clients Tab -->
+                <div class="tab-pane fade" id="clients" role="tabpanel">
+                    <div id="clients-content"></div>
+                </div>
+
+                <!-- Parameters Tab -->
+                <div class="tab-pane fade" id="parameters" role="tabpanel">
+                    <div id="parameters-content"></div>
                 </div>
             </div>
         </div>
